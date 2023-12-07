@@ -81,10 +81,10 @@ class ParagraphBlockComponentWidget extends BlockComponentStatefulWidget {
 
 class _ParagraphBlockComponentWidgetState extends State<ParagraphBlockComponentWidget>
     with
-        BlockComponentConfigurable,
-        BlockComponentBackgroundColorMixin,
         SelectableMixin,
         DefaultSelectableMixin,
+        BlockComponentConfigurable,
+        BlockComponentBackgroundColorMixin,
         NestedBlockComponentStatefulWidgetMixin,
         BlockComponentTextDirectionMixin,
         BlockComponentAlignMixin {

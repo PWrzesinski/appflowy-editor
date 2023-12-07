@@ -91,8 +91,7 @@ class AppFlowyRichText extends StatefulWidget {
   State<AppFlowyRichText> createState() => _AppFlowyRichTextState();
 }
 
-class _AppFlowyRichTextState extends State<AppFlowyRichText>
-    with SelectableMixin {
+class _AppFlowyRichTextState extends State<AppFlowyRichText> with SelectableMixin {
   final textKey = GlobalKey();
   final placeholderTextKey = GlobalKey();
 
@@ -153,12 +152,9 @@ class _AppFlowyRichTextState extends State<AppFlowyRichText>
   }) {
     final textPosition = TextPosition(offset: position.offset);
     var cursorHeight = _renderParagraph?.getFullHeightForCaret(textPosition);
-    var cursorOffset =
-        _renderParagraph?.getOffsetForCaret(textPosition, Rect.zero) ??
-            Offset.zero;
+    var cursorOffset = _renderParagraph?.getOffsetForCaret(textPosition, Rect.zero) ?? Offset.zero;
     if (cursorHeight == null) {
-      cursorHeight =
-          _placeholderRenderParagraph?.getFullHeightForCaret(textPosition);
+      cursorHeight = _placeholderRenderParagraph?.getFullHeightForCaret(textPosition);
       cursorOffset = _placeholderRenderParagraph?.getOffsetForCaret(
             textPosition,
             Rect.zero,
@@ -192,18 +188,16 @@ class _AppFlowyRichTextState extends State<AppFlowyRichText>
   @override
   Position getPositionInOffset(Offset start) {
     final offset = _renderParagraph?.globalToLocal(start) ?? Offset.zero;
-    final baseOffset =
-        _renderParagraph?.getPositionForOffset(offset).offset ?? -1;
+    final baseOffset = _renderParagraph?.getPositionForOffset(offset).offset ?? -1;
     return Position(path: widget.node.path, offset: baseOffset);
   }
 
   @override
   Selection? getWordBoundaryInOffset(Offset offset) {
     final localOffset = _renderParagraph?.globalToLocal(offset) ?? Offset.zero;
-    final textPosition = _renderParagraph?.getPositionForOffset(localOffset) ??
-        const TextPosition(offset: 0);
-    final textRange =
-        _renderParagraph?.getWordBoundary(textPosition) ?? TextRange.empty;
+    final textPosition =
+        _renderParagraph?.getPositionForOffset(localOffset) ?? const TextPosition(offset: 0);
+    final textRange = _renderParagraph?.getWordBoundary(textPosition) ?? TextRange.empty;
     final start = Position(path: widget.node.path, offset: textRange.start);
     final end = Position(path: widget.node.path, offset: textRange.end);
     return Selection(start: start, end: end);
@@ -212,8 +206,7 @@ class _AppFlowyRichTextState extends State<AppFlowyRichText>
   @override
   Selection? getWordBoundaryInPosition(Position position) {
     final textPosition = TextPosition(offset: position.offset);
-    final textRange =
-        _renderParagraph?.getWordBoundary(textPosition) ?? TextRange.empty;
+    final textRange = _renderParagraph?.getWordBoundary(textPosition) ?? TextRange.empty;
     final start = Position(path: widget.node.path, offset: textRange.start);
     final end = Position(path: widget.node.path, offset: textRange.end);
     return Selection(start: start, end: end);
@@ -242,17 +235,28 @@ class _AppFlowyRichTextState extends State<AppFlowyRichText>
       // so we need to return to the default selection.
       return [Rect.fromLTWH(0, 0, 0, _renderParagraph?.size.height ?? 0)];
     }
-    return rects;
+
+    const double vOffset = 5;
+    const double hOffset = 1;
+
+    final procesedRects = rects.map(
+      (rect) => Rect.fromLTRB(
+        rect.left - hOffset,
+        rect.top - vOffset,
+        rect.right + hOffset,
+        rect.bottom + vOffset,
+      ),
+    );
+
+    return procesedRects.toList(growable: false);
   }
 
   @override
   Selection getSelectionInRange(Offset start, Offset end) {
     final localStart = _renderParagraph?.globalToLocal(start) ?? Offset.zero;
     final localEnd = _renderParagraph?.globalToLocal(end) ?? Offset.zero;
-    final baseOffset =
-        _renderParagraph?.getPositionForOffset(localStart).offset ?? -1;
-    final extentOffset =
-        _renderParagraph?.getPositionForOffset(localEnd).offset ?? -1;
+    final baseOffset = _renderParagraph?.getPositionForOffset(localStart).offset ?? -1;
+    final extentOffset = _renderParagraph?.getPositionForOffset(localEnd).offset ?? -1;
     return Selection.single(
       path: widget.node.path,
       startOffset: baseOffset,
@@ -297,9 +301,7 @@ class _AppFlowyRichTextState extends State<AppFlowyRichText>
         applyHeightToFirstAscent: false,
         applyHeightToLastDescent: false,
       ),
-      text: widget.textSpanDecorator != null
-          ? widget.textSpanDecorator!(textSpan)
-          : textSpan,
+      text: widget.textSpanDecorator != null ? widget.textSpanDecorator!(textSpan) : textSpan,
       textDirection: textDirection(),
     );
   }
@@ -470,8 +472,7 @@ extension AppFlowyRichTextAttributes on Attributes {
   }
 
   Color? get findBackgroundColor {
-    final findBackgroundColor =
-        this[AppFlowyRichTextKeys.findBackgroundColor] as String?;
+    final findBackgroundColor = this[AppFlowyRichTextKeys.findBackgroundColor] as String?;
     return findBackgroundColor?.tryToColor();
   }
 
