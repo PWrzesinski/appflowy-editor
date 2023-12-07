@@ -23,11 +23,9 @@ Node paragraphNode({
   return Node(
     type: ParagraphBlockKeys.type,
     attributes: {
-      ParagraphBlockKeys.delta:
-          (delta ?? (Delta()..insert(text ?? ''))).toJson(),
+      ParagraphBlockKeys.delta: (delta ?? (Delta()..insert(text ?? ''))).toJson(),
       if (attributes != null) ...attributes,
-      if (textDirection != null)
-        ParagraphBlockKeys.textDirection: textDirection,
+      if (textDirection != null) ParagraphBlockKeys.textDirection: textDirection,
     },
     children: children,
   );
@@ -78,17 +76,15 @@ class ParagraphBlockComponentWidget extends BlockComponentStatefulWidget {
   final ShowPlaceholder? showPlaceholder;
 
   @override
-  State<ParagraphBlockComponentWidget> createState() =>
-      _ParagraphBlockComponentWidgetState();
+  State<ParagraphBlockComponentWidget> createState() => _ParagraphBlockComponentWidgetState();
 }
 
-class _ParagraphBlockComponentWidgetState
-    extends State<ParagraphBlockComponentWidget>
+class _ParagraphBlockComponentWidgetState extends State<ParagraphBlockComponentWidget>
     with
-        SelectableMixin,
-        DefaultSelectableMixin,
         BlockComponentConfigurable,
         BlockComponentBackgroundColorMixin,
+        SelectableMixin,
+        DefaultSelectableMixin,
         NestedBlockComponentStatefulWidgetMixin,
         BlockComponentTextDirectionMixin,
         BlockComponentAlignMixin {
@@ -132,8 +128,8 @@ class _ParagraphBlockComponentWidgetState
         _showPlaceholder = widget.showPlaceholder!(editorState, node);
       });
     } else {
-      final showPlaceholder = selection != null &&
-          (selection.isSingle && selection.start.path.equals(node.path));
+      final showPlaceholder =
+          selection != null && (selection.isSingle && selection.start.path.equals(node.path));
       if (showPlaceholder != _showPlaceholder) {
         setState(() => _showPlaceholder = showPlaceholder);
       }
@@ -165,8 +161,7 @@ class _ParagraphBlockComponentWidgetState
             editorState: editorState,
             textAlign: alignment?.toTextAlign,
             placeholderText: _showPlaceholder ? placeholderText : ' ',
-            textSpanDecorator: (textSpan) =>
-                textSpan.updateTextStyle(textStyle),
+            textSpanDecorator: (textSpan) => textSpan.updateTextStyle(textStyle),
             placeholderTextSpanDecorator: (textSpan) =>
                 textSpan.updateTextStyle(placeholderTextStyle),
             textDirection: textDirection,
