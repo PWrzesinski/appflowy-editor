@@ -6,8 +6,7 @@ import 'package:appflowy_editor/src/core/legacy/built_in_attribute_keys.dart';
 import 'package:appflowy_editor/src/plugins/markdown/decoder/custom_syntaxes/underline_syntax.dart';
 import 'package:markdown/markdown.dart' as md;
 
-class DeltaMarkdownDecoder extends Converter<String, Delta>
-    with md.NodeVisitor {
+class DeltaMarkdownDecoder extends Converter<String, Delta> implements md.NodeVisitor {
   final _delta = Delta();
   final Attributes _attributes = {};
   final List<md.InlineSyntax> customInlineSyntaxes;
