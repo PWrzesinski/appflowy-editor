@@ -49,6 +49,12 @@ dependencies:
   keyboard_height_plugin: ^0.0.4
   numerus: ^2.1.2
 
+dependency_overrides:
+  file_picker: # TODO: Switch back to pub.dev version when available.
+    git:
+      url: https://github.com/PWrzesinski/flutter_file_picker
+      ref: 4169010f56ec82320aa2b41e0d39b6e851008e62
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
